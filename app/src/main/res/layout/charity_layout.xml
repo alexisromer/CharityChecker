@@ -1,70 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     android:background="@color/pink_purple"
-    android:padding="10dp">
+    android:padding="0dp">
 
     <ImageView
         android:id="@+id/numberTextView"
-        android:layout_width="81dp"
-        android:layout_height="100dp"
+        android:layout_width="67dp"
+        android:layout_height="127dp"
         android:layout_marginBottom="612dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/CharityName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/screen_shot_2022_03_09_at_4_29_02_pm" />
 
-    <TextView
-        android:id="@+id/CharityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Charity Name"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        android:paddingLeft="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="127dp">
 
-    <TextView
-        android:id="@+id/tagLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tagline"
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        android:paddingLeft="80dp"
-        app:layout_constraintStart_toStartOf="@+id/CharityName"
-        app:layout_constraintTop_toBottomOf="@+id/CharityName" />
+        <TextView
+            android:id="@+id/CharityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:paddingLeft="16dp"
+            android:text="Charity Name"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/cause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cause"
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        android:paddingLeft="80dp"
-        app:layout_constraintStart_toStartOf="@+id/tagLine"
-        app:layout_constraintTop_toBottomOf="@+id/tagLine" />
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="16dp"
+            android:text="Address"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/cause"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/cause"
+            app:layout_constraintTop_toBottomOf="@+id/cause" />
 
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Address"
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        android:paddingLeft="80dp"
-        app:layout_constraintStart_toStartOf="@+id/cause"
-        app:layout_constraintTop_toBottomOf="@+id/cause" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/cause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Cause"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:paddingLeft="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/tagLine"
+            app:layout_constraintStart_toStartOf="@+id/tagLine"
+            app:layout_constraintTop_toBottomOf="@+id/tagLine" />
+
+        <TextView
+            android:id="@+id/tagLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Tagline"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:paddingLeft="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/CharityName"
+            app:layout_constraintStart_toStartOf="@+id/CharityName"
+            app:layout_constraintTop_toBottomOf="@+id/CharityName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

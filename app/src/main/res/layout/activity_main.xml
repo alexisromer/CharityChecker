@@ -7,20 +7,6 @@
     android:background="@color/pink_purple"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/zipCode"
-        android:layout_width="144dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Enter Zipcode "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.398"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="319dp"
@@ -37,20 +23,30 @@
         android:id="@+id/zipButton"
         android:layout_width="48dp"
         android:layout_height="49dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginBottom="229dp"
         android:text="✓"
         android:textSize="20sp"
         app:backgroundTint="#050404"
+        app:layout_constraintBottom_toBottomOf="@+id/zipCode"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.856"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/zipCode"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/zipCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="201dp"
+        android:ems="10"
+        android:hint="Enter a zipcode"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/zipCode"
+        app:layout_constraintEnd_toStartOf="@+id/zipButton"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.193" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

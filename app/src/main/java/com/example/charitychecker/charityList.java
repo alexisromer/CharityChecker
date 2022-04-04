@@ -15,6 +15,13 @@ public class charityList {
 
     }
 
+    public charityList(){
+        this.name = "null";
+        this.tagLine = "null";
+        this.cause = "null";
+        this.address = "null";
+    }
+
     public String getName(){ return name; }
 
     public void setName(String name){ this.name = name; }

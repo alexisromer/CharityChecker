@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,7 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void optionsActivity(){
+        EditText zipCodeEditText = findViewById(R.id.zipCode);
+        String zipInfo = zipCodeEditText.getText().toString();
         Intent activityIntent = new Intent(this, optionsActivity.class);
+        activityIntent.putExtra("zipCode", zipInfo);
         startActivity(activityIntent);
     }
 }

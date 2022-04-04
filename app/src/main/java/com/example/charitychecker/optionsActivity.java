@@ -31,7 +31,10 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void listActivity(){
+        Intent callerIntent = getIntent();
+        String zipCode = callerIntent.getStringExtra("zipCode");
         Intent listIntent = new Intent(this, charityActivity.class);
+        listIntent.putExtra("zipCode", zipCode);
         startActivity(listIntent);
     }
 }
