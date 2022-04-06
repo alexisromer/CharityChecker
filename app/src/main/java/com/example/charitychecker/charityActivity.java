@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class charityActivity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<charityList> listviewArray;
-    ArrayList<charityList> dummyArray;
+
     charityAdapter adapter;
     ListView charityListview;
     public charityList currCharity = new charityList();
@@ -48,11 +48,6 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
         generateList(zipCode);
         Log.e("onCreate:", "Before generatelist");
 
-
-
-
-
-
         //listviewArray.addAll(allEventsList);
 
         adapter = new charityAdapter(this, listviewArray);
@@ -71,6 +66,12 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
         void onSuccess();
     }
 
+    public String getDonateURL(String EIN){
+        // create url for donation
+        String url = "https://www.charitynavigator.org/index.cfm?bay=my.donations.makedonation&ein=" + EIN;
+        return url;
+    }
+
     public void makeQuery(String zip, final VolleyCallBack callBack){
         // create queue object
         RequestQueue queue;
@@ -80,7 +81,10 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
 
         // set URL
         String auth = "?app_id=afeabef6&app_key=d5e89d0fa78f1da2caa6aa1afcd4c324";
-        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + "&pageSize=2&state=MA&zip=" + zip;
+        String pageSize = "&pageSize=100";
+        String sort = "&sort=RATING%3ADESC";
+        //String fundRaise = "&fundraisingOrgs=true";
+        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&zip=" + zip;
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, myUrl, null,
@@ -89,8 +93,6 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
-
-                            Log.e("OnResponse:", "Respose length is " + response.length());
                             for (int i = 0; i < response.length(); i++) {
                                 Log.e("makeQuery (on Response)", "request successful");
                                 // Get current json object
@@ -100,11 +102,14 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
                                 String name = test.getString("charityName");
                                 currCharity.setName(name);
 
+                                // Get the current EIN (json object) data
+                                String ein = test.getString("ein");
+                                currCharity.setEIN(ein);
+
                                 // Get the current tagline (json object) data
                                 // try - if there is an exception, set tagline to "not available"
                                 try {
                                     String tag = test.getString("tagLine");
-
                                     // change "Null" to "Not available"
                                     if (tag.equals("null")){
                                         currCharity.setTagLine("Not available");
@@ -118,9 +123,7 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
 
                                 // Get cause JSON object
                                 // try - if there is an exception, set cause to "not available"
-                                // Get the current tagline (json object) data
-                                // try - if there is an exception, set tagline to "not available"
-                                try {
+                                 try {
                                     JSONObject causeObj = test.getJSONObject("cause");
                                     String cause = causeObj.getString("causeName");
 
@@ -143,6 +146,10 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
                                         + mailAddress.getString("postalCode");
                                 currCharity.setAddress(address);
 
+                                // set the donate url
+                                String dUrl = getDonateURL(currCharity.getEIN());
+                                currCharity.setDonateURL(dUrl);
+
                                 callBack.onSuccess();
 
                                 Log.e("makeQuery (onResponse)","Charity name is " + currCharity.getName());
@@ -163,8 +170,6 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
                 });
 
 
-        Log.e("makeQuery", "dummyArray size:" + dummyArray.size());
-
         queue.add(request);
 
 
@@ -173,15 +178,19 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
     private void generateList(String zip){
         Log.e("generateList:", "in mgeneratelist");
         listviewArray = new ArrayList<>();
-        dummyArray = new ArrayList<>();
-
         makeQuery(zip, new VolleyCallBack() {
-
             @Override
             public void onSuccess() {
-                // add current charity to list view
-                listviewArray.add(new charityList(currCharity.getName(), currCharity.getTagline(),
-                        currCharity.getCause(),currCharity.getAddress()));
+               if (!currCharity.getCause().equals("Not available")){
+                    // add current charity to list view
+                    listviewArray.add(new charityList(currCharity.getEIN(),
+                            currCharity.getName(), currCharity.getTagline(),
+                            currCharity.getCause(),currCharity.getAddress(),
+                            currCharity.getDonateURL()));
+
+                    Log.e("ON SUCEESS", "donation url is " + currCharity.getDonateURL());
+               }
+
             }
         });
 
