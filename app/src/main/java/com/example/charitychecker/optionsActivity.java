@@ -28,6 +28,12 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
         if (view.getId() == R.id.donate_button) {
             listActivity();
         }
+        if (view.getId() == R.id.foodbanks_button){
+            foodBankActivitylist();
+        }
+        if(view.getId() == R.id.dropoff_button){
+            boxActivityList();
+        }
     }
 
     public void listActivity(){
@@ -36,5 +42,21 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
         Intent listIntent = new Intent(this, charityActivity.class);
         listIntent.putExtra("zipCode", zipCode);
         startActivity(listIntent);
+    }
+
+    public void foodBankActivitylist(){
+        Intent callerIntent = getIntent();
+        String zipCode = callerIntent.getStringExtra("zipCode");
+        Intent foodBankIntent = new Intent(this, foodBankActivity.class);
+        foodBankIntent.putExtra("zipCode", zipCode);
+        startActivity(foodBankIntent);
+    }
+
+    public void boxActivityList(){
+        Intent callerIntent = getIntent();
+        String zipCode = callerIntent.getStringExtra("zipCode");
+        Intent boxIntent = new Intent(this, boxActivity.class);
+        boxIntent.putExtra("zipCode", zipCode);
+        startActivity(boxIntent);
     }
 }

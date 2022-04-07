@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class charityActivity extends AppCompatActivity implements View.OnClickListener {
+public class charityActivity extends AppCompatActivity {
     ArrayList<charityList> listviewArray;
     ArrayList<charityList> dummyArray;
     charityAdapter adapter;
@@ -59,8 +59,8 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
         charityListview = findViewById(R.id.charityListView);
         charityListview.setAdapter(adapter);
         charityListview.setDivider(null);
-        Button charityTest = findViewById(R.id.charityTestButton);
-        charityTest.setOnClickListener((View.OnClickListener) this);
+       // Button charityTest = findViewById(R.id.charityTestButton);
+       // charityTest.setOnClickListener((View.OnClickListener) this);
 
         adapter.notifyDataSetChanged();
         adapter.clear();
@@ -80,7 +80,7 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
 
         // set URL
         String auth = "?app_id=afeabef6&app_key=d5e89d0fa78f1da2caa6aa1afcd4c324";
-        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + "&pageSize=2&state=MA&zip=" + zip;
+        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + "&pageSize=2&zip=" + zip;
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, myUrl, null,
@@ -182,22 +182,14 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
                 // add current charity to list view
                 listviewArray.add(new charityList(currCharity.getName(), currCharity.getTagline(),
                         currCharity.getCause(),currCharity.getAddress()));
+                adapter.notifyDataSetChanged();
+
             }
         });
 
     }
 
 
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.charityTestButton) {
 
-            adapter.notifyDataSetChanged();
-
-
-        }
-
-
-    }
 
 }
