@@ -29,6 +29,12 @@
             android:value="${ID}" />
 
         <activity
+            android:name=".boxActivity"
+            android:exported="false" />
+        <activity
+            android:name=".foodBankActivity"
+            android:exported="false" />
+        <activity
             android:name=".charityActivity"
             android:exported="false" />
         <activity

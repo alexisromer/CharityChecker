@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class charityAdapter extends ArrayAdapter<charityList> {
-
+    private charityAdapter context = this;
 
 
     ArrayList<charityList> listAdapter;
@@ -63,7 +64,23 @@ public class charityAdapter extends ArrayAdapter<charityList> {
         TextView address = listItemView.findViewById(R.id.address);
         address.setText(current.getAddress());
 
+        //set onClick function to the donate button
+        Button donateButton = listItemView.findViewById(R.id.theDonateButton);
+        donateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //if the charity has a donate page
+                //launch webview or take user to website using URL given
+                //if website does not have donate page, make the button go invisible
+            }
+        });
+
         return listItemView;
+    }
+
+
+    public void update() {
+        this.notifyDataSetChanged();
     }
 
 

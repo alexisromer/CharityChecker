@@ -32,7 +32,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class charityActivity extends AppCompatActivity implements View.OnClickListener {
+public class charityActivity extends AppCompatActivity {
     ArrayList<charityList> listviewArray;
 
     charityAdapter adapter;
@@ -62,8 +62,8 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
         charityListview = findViewById(R.id.charityListView);
         charityListview.setAdapter(adapter);
         charityListview.setDivider(null);
-        Button charityTest = findViewById(R.id.charityTestButton);
-        charityTest.setOnClickListener((View.OnClickListener) this);
+       // Button charityTest = findViewById(R.id.charityTestButton);
+       // charityTest.setOnClickListener((View.OnClickListener) this);
 
         adapter.notifyDataSetChanged();
         adapter.clear();
@@ -216,6 +216,7 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
                             currCharity.getDonateURL()));
 
                     Log.e("ON SUCEESS", "donation url is " + currCharity.getDonateURL());
+                   adapter.notifyDataSetChanged();
                }
 
             }
@@ -223,17 +224,8 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.charityTestButton) {
-
-            adapter.notifyDataSetChanged();
-
-
-        }
-
-
-    }
-
 }
+
+
+
+
