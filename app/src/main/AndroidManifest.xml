@@ -11,6 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CharityChecker">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${API_MAPS}" />
+
+        <activity
+            android:name=".FoodBankMapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_food_bank_map" />
+
+        <meta-data
+            android:name="keyValue"
+            android:value="${KEY}" />
+        <meta-data
+            android:name="idValue"
+            android:value="${ID}" />
+
         <activity
             android:name=".charityActivity"
             android:exported="false" />

@@ -3,6 +3,8 @@ package com.example.charitychecker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class charityActivity extends AppCompatActivity implements View.OnClickListener {
@@ -66,10 +74,30 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
         void onSuccess();
     }
 
-    public String getDonateURL(String EIN){
+    public String getAPIKey(String whichKey){
+        try {
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(
+                    getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            String myAPIKey = bundle.getString(whichKey);
+           Log.e("Get Donate URL", "API KEY : " + myAPIKey);
+            return myAPIKey;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("Get Donate URL",
+                    "Failed to load meta-data, NameNotFound: " + e.getMessage());
+            return "ERROR";
+        } catch (NullPointerException e) {
+            Log.e("Get Donate URL",
+                    "Failed to load meta-data, NullPointer: " + e.getMessage());
+            return "ERROR";
+        }
+    }
+
+
+    public String getDonateURL(String EIN) {
         // create url for donation
-        String url = "https://www.charitynavigator.org/index.cfm?bay=my.donations.makedonation&ein=" + EIN;
-        return url;
+        String stringurl = "https://www.charitynavigator.org/index.cfm?bay=my.donations.makedonation&ein=" + EIN;
+        return stringurl;
     }
 
     public void makeQuery(String zip, final VolleyCallBack callBack){
@@ -79,8 +107,9 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
 
         Log.e("makeQuery:", "in make query");
 
-        // set URL
-        String auth = "?app_id=afeabef6&app_key=d5e89d0fa78f1da2caa6aa1afcd4c324";
+        // set URL based on api key
+        String auth = "?app_id=" + getAPIKey("idValue") + "&app_key=" +getAPIKey("keyValue");
+
         String pageSize = "&pageSize=100";
         String sort = "&sort=RATING%3ADESC";
         //String fundRaise = "&fundraisingOrgs=true";
@@ -169,9 +198,7 @@ public class charityActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 });
 
-
         queue.add(request);
-
 
     }
 
