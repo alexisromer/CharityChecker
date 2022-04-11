@@ -1,5 +1,7 @@
 package com.example.charitychecker;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class charityList {
     private String EIN;
     private String name;
@@ -7,6 +9,7 @@ public class charityList {
     private String cause;
     private String address;
     private String donateURL;
+    private LatLng geoLocation;
 
 
 
@@ -17,6 +20,17 @@ public class charityList {
         this.cause = c;
         this.address = a;
         this.donateURL = d;
+    }
+
+
+    public charityList(String e, String n, String t, String c, String a, String d, LatLng g){
+        this.EIN = e;
+        this.name = n;
+        this.tagLine = t;
+        this.cause = c;
+        this.address = a;
+        this.donateURL = d;
+        this.geoLocation = g;
     }
 
     public charityList(){
@@ -45,4 +59,7 @@ public class charityList {
 
     public String getDonateURL(){ return donateURL; }
     public void setDonateURL(String url){ this.donateURL = url; }
+
+    public LatLng getGeoLocation(){ return geoLocation;}
+    public void setGeoLocation(LatLng LATLONG){ this.geoLocation = LATLONG;}
 }
