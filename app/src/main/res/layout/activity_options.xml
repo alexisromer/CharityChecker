@@ -5,25 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pink_purple"
-    tools:context=".optionsActivity"><![CDATA[
-
-    />
-
-
-
-
-
-
-
-
-
-    ]]>
+    tools:context=".optionsActivity">
 
     <Button
         android:id="@+id/donate_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="192dp"
         android:layout_weight="1"
         android:padding="10dp"
         android:text="Donate"
@@ -34,33 +22,22 @@
         app:layout_constraintTop_toBottomOf="@+id/looking_textView" />
 
     <Button
-        android:id="@+id/volunteer_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:text="Volunteer"
-        app:backgroundTint="@color/navy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donate_button" />
-
-    <Button
         android:id="@+id/foodbanks_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_weight="1"
         android:padding="10dp"
         android:text="Foodbanks"
         app:backgroundTint="@color/navy"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volunteer_button" />
+        app:layout_constraintTop_toBottomOf="@+id/donate_button" />
 
     <Button
         android:id="@+id/dropoff_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_weight="1"
         android:padding="10dp"
         android:text="Drop off Boxes"

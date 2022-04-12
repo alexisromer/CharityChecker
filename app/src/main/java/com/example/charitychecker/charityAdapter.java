@@ -2,6 +2,8 @@ package com.example.charitychecker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +50,17 @@ public class charityAdapter extends ArrayAdapter<charityList> {
         charityList current = getItem(position);
         assert current != null;
 
+        Button theDonate = listItemView.findViewById(R.id.theDonateButton);
+        theDonate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String currentValue = current.getDonateURL();
+                Intent donateIntent = new Intent(Intent.ACTION_VIEW);
+                donateIntent.setData(Uri.parse(currentValue));
+                view.getContext().startActivity(donateIntent);
+            }
+        });
+
 
         //entry charity name
         TextView charityText = listItemView.findViewById(R.id.CharityName);
@@ -64,16 +77,7 @@ public class charityAdapter extends ArrayAdapter<charityList> {
         TextView address = listItemView.findViewById(R.id.address);
         address.setText(current.getAddress());
 
-        //set onClick function to the donate button
-        Button donateButton = listItemView.findViewById(R.id.theDonateButton);
-        donateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //if the charity has a donate page
-                //launch webview or take user to website using URL given
-                //if website does not have donate page, make the button go invisible
-            }
-        });
+
 
         return listItemView;
     }
