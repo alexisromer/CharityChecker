@@ -45,13 +45,6 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
         startActivity(listIntent);
     }
 
-    public void foodBankActivitylist(){
-        Intent callerIntent = getIntent();
-        String zipCode = callerIntent.getStringExtra("zipCode");
-        Intent foodBankIntent = new Intent(this, foodBankActivity.class);
-        foodBankIntent.putExtra("zipCode", zipCode);
-        startActivity(foodBankIntent);
-    }
 
     public void FoodBankMapActivity(){
         Intent callerIntent = getIntent();

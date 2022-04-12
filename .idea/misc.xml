@@ -5,7 +5,10 @@
       <map>
         <entry key="app/src/main/res/layout/activity_box.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_charity.xml" value="0.12604166666666666" />
+        <entry key="app/src/main/res/layout/activity_donate.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_food_bank.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1828774062816616" />
+        <entry key="app/src/main/res/layout/activity_options.xml" value="0.1" />
         <entry key="app/src/main/res/layout/box_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/charity_layout.xml" value="0.12604166666666666" />
         <entry key="app/src/main/res/layout/foodbank_layout.xml" value="0.1" />

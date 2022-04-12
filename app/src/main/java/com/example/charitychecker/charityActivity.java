@@ -2,12 +2,15 @@ package com.example.charitychecker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -37,6 +40,7 @@ public class charityActivity extends AppCompatActivity {
 
     charityAdapter adapter;
     ListView charityListview;
+    Button theDonate;
     public charityList currCharity = new charityList();
 
     @Override
@@ -48,6 +52,8 @@ public class charityActivity extends AppCompatActivity {
         //String zipInfo = callerIntent.getStringExtra("zipCode");
         //EditText zipCodeEditText = findViewById(R.id.zipCode);
         //String zipInfo = zipCodeEditText.getText().toString();
+
+
 
         Intent callerIntent = getIntent();
         String zipCode = callerIntent.getStringExtra("zipCode");
@@ -61,14 +67,13 @@ public class charityActivity extends AppCompatActivity {
         adapter = new charityAdapter(this, listviewArray);
         charityListview = findViewById(R.id.charityListView);
         charityListview.setAdapter(adapter);
-        charityListview.setDivider(null);
-       // Button charityTest = findViewById(R.id.charityTestButton);
-       // charityTest.setOnClickListener((View.OnClickListener) this);
+        charityListview.setDivider(null);;
 
         adapter.notifyDataSetChanged();
         adapter.clear();
 
     }
+
 
     public interface VolleyCallBack {
         void onSuccess();
