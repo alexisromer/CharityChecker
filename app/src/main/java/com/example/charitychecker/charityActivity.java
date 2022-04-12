@@ -110,10 +110,10 @@ public class charityActivity extends AppCompatActivity {
         // set URL based on api key
         String auth = "?app_id=" + getAPIKey("idValue") + "&app_key=" +getAPIKey("keyValue");
 
-        String pageSize = "&pageSize=100";
+        String pageSize = "&pageSize=20";
         String sort = "&sort=RATING%3ADESC";
         //String fundRaise = "&fundraisingOrgs=true";
-        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&zip=" + zip;
+        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&state=" + zip;
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, myUrl, null,
