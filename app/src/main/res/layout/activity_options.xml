@@ -7,57 +7,56 @@
     android:background="@color/pink_purple"
     tools:context=".optionsActivity">
 
-    <Button
-        android:id="@+id/donate_button"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="192dp"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:text="Donate"
-        app:backgroundTint="@color/navy"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/donateImageView"
+        android:layout_width="174dp"
+        android:layout_height="179dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/boxImageView"
+        app:layout_constraintEnd_toStartOf="@+id/boxImageView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/looking_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/looking_textView"
+        app:layout_constraintVertical_bias="0.063"
+        app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_06_58_pm" />
 
-    <Button
-        android:id="@+id/foodbanks_button"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:text="Foodbanks"
-        app:backgroundTint="@color/navy"
+    <ImageView
+        android:id="@+id/foodImageView"
+        android:layout_width="174dp"
+        android:layout_height="179dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintBottom_toTopOf="@+id/boxImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/donateImageView"
+        app:layout_constraintTop_toBottomOf="@+id/looking_textView"
+        app:layout_constraintVertical_bias="0.022"
+        app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_13_13_pm" />
+
+    <ImageView
+        android:id="@+id/boxImageView"
+        android:layout_width="174dp"
+        android:layout_height="179dp"
+        android:layout_marginTop="368dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donate_button" />
-
-    <Button
-        android:id="@+id/dropoff_button"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:text="Drop off Boxes"
-        app:backgroundTint="@color/navy"
-        app:layout_constraintTop_toBottomOf="@+id/foodbanks_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/looking_textView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_13_20_pm" />
 
     <TextView
         android:id="@+id/looking_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="148dp"
         android:layout_weight="1"
         android:padding="10dp"
         android:text="What are you looking for?"
         android:textColor="@color/black"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/donate_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
