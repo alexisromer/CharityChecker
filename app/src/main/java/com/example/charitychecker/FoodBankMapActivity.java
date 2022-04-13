@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.charitychecker.databinding.ActivityFoodBankMapBinding;
@@ -68,9 +69,11 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
     }
 
     public void geoCode(String address, final FoodBankMapActivity.VolleyCallBack callBack) {
-        Log.e("geoCode", "In geoCode");
+        String tag = "geoCode";
         String APIKEY= getAPIKey("com.google.android.geo.API_KEY");
-        String URL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=" + APIKEY;
+        String addressURL = address.replaceAll(" ","+");
+        // create JSON request URL
+        String URL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressURL + "&key=" + APIKEY;
 
         // create queue object
         RequestQueue queue;
@@ -85,27 +88,18 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                     public void onResponse(JSONObject response) {
                         try {
 
-                            // Get current json object
-                            JSONArray thing = response.getJSONArray("results");
-                            JSONObject results = thing.getJSONObject(0);
-                            Log.e("GeoCode", "HERE1");
-
-                            JSONObject geometry = results.getJSONObject("geometry");
-                            Log.e("GeoCode", "HERE2");
-                            JSONObject location = geometry.getJSONObject("location");
+                            // Get JSON object containing latlong coordinates
+                            JSONObject location = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
                             lat[0] = location.getDouble("lat");
-                            Log.e("GeoCode", "HERE3");
                             lng[0] = location.getDouble("lng");
 
                             LatLng coords = new LatLng(lat[0], lng[0]);
-                            Log.e("geoCode", "latitude is " + coords.latitude + " longitude is " + coords.longitude);
                             currCharity.setGeoLocation(coords);
-                            Log.e("INSIDE GEOCODE","lat is " + lat[0] + " long is " + lng[0]);
                             callBack.onSuccess();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("makeQuery:", "JSONException");
+                            Log.e(tag, "JSONException");
                         }
                     }
                 },
@@ -117,10 +111,6 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                     }
                 });
         queue.add(request);
-
-
-        //return coords;
-
     }
 
 
@@ -135,7 +125,7 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
         String auth = "?app_id=" + getAPIKey("idValue") + "&app_key=" +getAPIKey("keyValue");
 
         String foodBank = "&categoryID=6&causeID=18";
-        String pageSize = "&pageSize=3";
+        String pageSize = "&pageSize=1";
         String sort = "&sort=RATING%3ADESC";
         String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + pageSize + foodBank;
 
@@ -232,9 +222,10 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
             @Override
             public void onSuccess() {
                 currCharity.setCause("Food bank");
-                geoCode("TEST", new FoodBankMapActivity.VolleyCallBack() {
+                geoCode(currCharity.getAddress(), new FoodBankMapActivity.VolleyCallBack() {
                     @Override
                     public void onSuccess() {
+                        mapMarker.add(currCharity);
                             Log.e("ON SUCESS", "charity name is " + mapMarker.lastElement().getName());
                             Log.e("ON SUCCESS", "name : " + currCharity.getName() + " location: "
                                     + currCharity.getGeoLocation().latitude + "," + currCharity.getGeoLocation().longitude);
@@ -247,20 +238,29 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        String tag = "onMapReady";
         mMap = googleMap;
         pre(mMap, new FoodBankMapActivity.VolleyCallBack(){
             @Override
             public void onSuccess(){
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(currCharity.getGeoLocation()));
+                mMap.moveCamera(CameraUpdateFactory.zoomTo(10));
                 Log.e("IN MY PRE THING", "name : ");
-                mMap.addMarker(new MarkerOptions().position(currCharity.getGeoLocation()).title(currCharity.getName()));
+                Log.e(tag,"size is : " + mapMarker.size());
+                for (int i = 0; i < mapMarker.size(); i++){
+                    charityList thisCharity = mapMarker.elementAt(i);
+                    mMap.addMarker(new MarkerOptions()
+                            .position(thisCharity.getGeoLocation())
+                            .title(thisCharity.getName())
+                            .snippet(thisCharity.getTagline())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+                    );
+                }
+
             }
 
         });
 
-        LatLng currLocLatLong = new LatLng(14.0583, 108.2772);
-        LatLng otherLatLong = new LatLng(15.1, 103.278);
-        this.mMap.moveCamera(CameraUpdateFactory.newLatLng(currLocLatLong));
 
     }
 }
