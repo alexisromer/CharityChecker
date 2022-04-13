@@ -1,5 +1,7 @@
 package com.example.charitychecker;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.pm.ApplicationInfo;
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.charitychecker.databinding.ActivityFoodBankMapBinding;
@@ -26,15 +29,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Vector;
 
 public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    public GoogleMap mMap;
     private ActivityFoodBankMapBinding binding;
 
     charityList currCharity = new charityList();
-    List<charityList> mapMarkers;
+    public Vector<charityList> mapMarker = new Vector<charityList>();
+    public int n = 0;
 
 
     public interface VolleyCallBack {
@@ -60,10 +68,12 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
-    public LatLng geoCode(String address, final FoodBankMapActivity.VolleyCallBack callBack) {
-        Log.e("geoCode", "In geoCode");
+    public void geoCode(String address, final FoodBankMapActivity.VolleyCallBack callBack) {
+        String tag = "geoCode";
         String APIKEY= getAPIKey("com.google.android.geo.API_KEY");
-        String URL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=" + APIKEY;
+        String addressURL = address.replaceAll(" ","+");
+        // create JSON request URL
+        String URL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressURL + "&key=" + APIKEY;
 
         // create queue object
         RequestQueue queue;
@@ -78,24 +88,18 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                     public void onResponse(JSONObject response) {
                         try {
 
-                            // Get current json object
-                            JSONArray thing = response.getJSONArray("results");
-                            JSONObject results = thing.getJSONObject(0);
-                            Log.e("GeoCode", "HERE1");
-
-                            JSONObject geometry = results.getJSONObject("geometry");
-                            Log.e("GeoCode", "HERE2");
-                            JSONObject location = geometry.getJSONObject("location");
+                            // Get JSON object containing latlong coordinates
+                            JSONObject location = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
                             lat[0] = location.getDouble("lat");
-                            Log.e("GeoCode", "HERE3");
                             lng[0] = location.getDouble("lng");
 
-                            Log.e("INSIDE GEOCODE","lat is " + lat[0] + " long is " + lng[0]);
+                            LatLng coords = new LatLng(lat[0], lng[0]);
+                            currCharity.setGeoLocation(coords);
                             callBack.onSuccess();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("makeQuery:", "JSONException");
+                            Log.e(tag, "JSONException");
                         }
                     }
                 },
@@ -107,10 +111,6 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                     }
                 });
         queue.add(request);
-        LatLng coords = new LatLng(lat[0], lng[0]);
-        Log.e("geoCode", "latitude is " + coords.latitude + " longitude is " + coords.longitude);
-        return coords;
-
     }
 
 
@@ -147,10 +147,8 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                                //Log.e("??", test.getJSONObject("name").getString("name"));
 
                                 // Get the current name (json object) data
-                                String name = response.getJSONObject(0).getString("charityName");
-                                Log.e("??", name);
+                                String name = response.getJSONObject(i).getString("charityName");
                                 currCharity.setName(name);
-                                Log.e("make query", "name is " + name);
 
                                 // Get the current EIN (json object) data
                                 String ein = test.getString("ein");
@@ -170,8 +168,6 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                                     currCharity.setTagLine("Not available");
                                 }
 
-                                currCharity.setCause("Food bank");
-
 
                                 // Get the current address
                                 JSONObject mailAddress = test.getJSONObject("mailingAddress");
@@ -181,10 +177,11 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                                         + mailAddress.getString("postalCode");
                                 currCharity.setAddress(address);
 
-
-                                //Log.e("in query", "coords are " + thing.longitude + "," + thing.latitude);
-
+                                mapMarker.add(currCharity);
                                 callBack.onSuccess();
+
+
+                                Log.e("makeQuery (onResponse)", "n is" + n);
 
                                 Log.e("makeQuery (onResponse)","Charity name is " + currCharity.getName());
                             }
@@ -220,38 +217,49 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
     }
 
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    public void pre(GoogleMap googleMap, final FoodBankMapActivity.VolleyCallBack callBack){
         foodBankQuery("01460", new FoodBankMapActivity.VolleyCallBack() {
             @Override
             public void onSuccess() {
-                //mapMarkers.add(new charityList(currCharity.getEIN(),
-                //         currCharity.getName(), currCharity.getTagline(),
-                //         currCharity.getCause(),currCharity.getAddress(),
-                //          currCharity.getDonateURL(), currCharity.getGeoLocation()));
-                // geocode the address
-                LatLng thing = geoCode("TEST", new FoodBankMapActivity.VolleyCallBack() {
+                currCharity.setCause("Food bank");
+                geoCode(currCharity.getAddress(), new FoodBankMapActivity.VolleyCallBack() {
                     @Override
                     public void onSuccess() {
-                        Log.e("on sucess", "Yay!");
-                        //mapMarkers.add(new charityList(currCharity.getEIN(),
-                        //         currCharity.getName(), currCharity.getTagline(),
-                        //         currCharity.getCause(),currCharity.getAddress(),
-                        //          currCharity.getDonateURL(), currCharity.getGeoLocation()));
-                        // geocode the address
+                        mapMarker.add(currCharity);
+                            Log.e("ON SUCESS", "charity name is " + mapMarker.lastElement().getName());
+                            Log.e("ON SUCCESS", "name : " + currCharity.getName() + " location: "
+                                    + currCharity.getGeoLocation().latitude + "," + currCharity.getGeoLocation().longitude);
+                         callBack.onSuccess();
                     }
                 });
-                Log.e("map", "coords are " + thing.longitude + "," + thing.latitude);
-
             }
         });
+    }
 
-        LatLng currLocLatLong = new LatLng(14.0583, 108.2772);
-        LatLng otherLatLong = new LatLng(15.1, 103.278);
-        this.mMap.moveCamera(CameraUpdateFactory.newLatLng(currLocLatLong));
-        mMap.addMarker(new MarkerOptions().position(currLocLatLong).title("Marker in"+ currLocLatLong.latitude+currLocLatLong.longitude));
-        mMap.addMarker(new MarkerOptions().position(otherLatLong).title("Marker in"+ otherLatLong.latitude+otherLatLong.longitude));
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        String tag = "onMapReady";
+        mMap = googleMap;
+        pre(mMap, new FoodBankMapActivity.VolleyCallBack(){
+            @Override
+            public void onSuccess(){
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(currCharity.getGeoLocation()));
+                mMap.moveCamera(CameraUpdateFactory.zoomTo(10));
+                Log.e("IN MY PRE THING", "name : ");
+                Log.e(tag,"size is : " + mapMarker.size());
+                for (int i = 0; i < mapMarker.size(); i++){
+                    charityList thisCharity = mapMarker.elementAt(i);
+                    mMap.addMarker(new MarkerOptions()
+                            .position(thisCharity.getGeoLocation())
+                            .title(thisCharity.getName())
+                            .snippet(thisCharity.getTagline())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+                    );
+                }
+
+            }
+
+        });
 
 
     }
