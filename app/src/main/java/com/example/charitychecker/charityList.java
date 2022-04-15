@@ -10,16 +10,18 @@ public class charityList {
     private String address;
     private String donateURL;
     private LatLng geoLocation;
+    private String category;
 
 
 
-    public charityList(String e, String n, String t, String c, String a, String d){
+    public charityList(String e, String n, String t, String c, String a, String d, String cat){
         this.EIN = e;
         this.name = n;
         this.tagLine = t;
         this.cause = c;
         this.address = a;
         this.donateURL = d;
+        this.category = cat;
     }
 
 
@@ -62,4 +64,7 @@ public class charityList {
 
     public LatLng getGeoLocation(){ return geoLocation;}
     public void setGeoLocation(LatLng LATLONG){ this.geoLocation = LATLONG;}
+
+    public String getCategory(){ return category;}
+    public void setCategory(String cat){ this.category = cat ;}
 }
