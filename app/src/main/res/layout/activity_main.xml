@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.47"
-        app:srcCompat="@drawable/screen_shot_2022_03_09_at_4_29_02_pm" />
+        app:srcCompat="@drawable/charity_app_logo" />
 
     <Button
         android:id="@+id/zipButton"

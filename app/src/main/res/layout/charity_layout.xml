@@ -9,7 +9,7 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/numberTextView"
+        android:id="@+id/testImageView"
         android:layout_width="76dp"
         android:layout_height="76dp"
         app:srcCompat="@drawable/screen_shot_2022_03_09_at_4_29_02_pm" />
