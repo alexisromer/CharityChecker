@@ -139,25 +139,21 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                     public void onResponse(JSONArray response) {
                         try{
                             for (int i = 0; i < response.length(); i++) {
-                                Log.e("makeQuery (on Response)", "request successful");
-
                                 // Get current json object
-                                JSONObject test = response.getJSONObject(i);
-
-                               //Log.e("??", test.getJSONObject("name").getString("name"));
+                                JSONObject json = response.getJSONObject(i);
 
                                 // Get the current name (json object) data
                                 String name = response.getJSONObject(i).getString("charityName");
                                 currCharity.setName(name);
 
                                 // Get the current EIN (json object) data
-                                String ein = test.getString("ein");
+                                String ein = json.getString("ein");
                                 currCharity.setEIN(ein);
 
                                 // Get the current tagline (json object) data
                                 // try - if there is an exception, set tagline to "not available"
                                 try {
-                                    String tag = test.getString("tagLine");
+                                    String tag = json.getString("tagLine");
                                     // change "Null" to "Not available"
                                     if (tag.equals("null")){
                                         currCharity.setTagLine("Not available");
@@ -170,7 +166,7 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
 
 
                                 // Get the current address
-                                JSONObject mailAddress = test.getJSONObject("mailingAddress");
+                                JSONObject mailAddress = json.getJSONObject("mailingAddress");
                                 String address = mailAddress.getString("streetAddress1")
                                         + "," + mailAddress.getString("city") + ","
                                         + mailAddress.getString("stateOrProvince") + " "
@@ -179,6 +175,7 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
 
                                 mapMarker.add(currCharity);
                                 callBack.onSuccess();
+
 
 
                                 Log.e("makeQuery (onResponse)", "n is" + n);

@@ -171,6 +171,21 @@ public class charityActivity extends AppCompatActivity {
                                     currCharity.setCause("Not available");
                                 }
 
+                                // try - if there is an exception, set cause to "not available"
+                                try {
+                                    JSONObject catObj = test.getJSONObject("category");
+                                    String cat = catObj.getString("categoryName");
+
+                                    // change "Null" to "Not available"
+                                    if (cat.equals("null")){
+                                        currCharity.setCategory("Not available");
+                                    } else {
+                                        currCharity.setCategory(cat);
+                                    }
+                                } catch (JSONException e){
+                                    currCharity.setCategory("Not available");
+                                }
+
 
                                 // Get the current address
                                 JSONObject mailAddress = test.getJSONObject("mailingAddress");
@@ -218,9 +233,10 @@ public class charityActivity extends AppCompatActivity {
                     listviewArray.add(new charityList(currCharity.getEIN(),
                             currCharity.getName(), currCharity.getTagline(),
                             currCharity.getCause(),currCharity.getAddress(),
-                            currCharity.getDonateURL()));
+                            currCharity.getDonateURL(), currCharity.getCategory()));
 
                     Log.e("ON SUCEESS", "donation url is " + currCharity.getDonateURL());
+                    Log.e("ON SUCESS", "category is " + currCharity.getCategory());
                    adapter.notifyDataSetChanged();
                }
 
