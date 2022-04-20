@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/pink_purple"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/testImageView"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        app:srcCompat="@drawable/blood_copy" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CharityName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:text="Charity Name"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Address"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="@id/CharityName"
+            app:layout_constraintTop_toBottomOf="@id/tagLine" />
+
+        <TextView
+            android:id="@+id/cause"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Cause"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/CharityName"
+            app:layout_constraintTop_toBottomOf="@+id/CharityName" />
+
+        <TextView
+            android:id="@+id/tagLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Tagline"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@id/CharityName"
+            app:layout_constraintTop_toBottomOf="@id/cause" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

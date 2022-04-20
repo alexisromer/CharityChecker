@@ -35,18 +35,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class charityActivity extends AppCompatActivity {
-    ArrayList<charityList> listviewArray;
+public class bloodActivity extends AppCompatActivity {
+    ArrayList<bloodList> listviewArray;
 
-    charityAdapter adapter;
-    ListView charityListview;
+    bloodAdapter adapter;
+    ListView bloodListview;
     Button theDonate;
-    public charityList currCharity = new charityList();
+    public bloodList currCharity = new bloodList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_charity);
+        setContentView(R.layout.activity_blood);
 
         //Intent callerIntent = getIntent();
         //String zipInfo = callerIntent.getStringExtra("zipCode");
@@ -64,10 +64,10 @@ public class charityActivity extends AppCompatActivity {
 
         //listviewArray.addAll(allEventsList);
 
-        adapter = new charityAdapter(this, listviewArray);
-        charityListview = findViewById(R.id.charityListView);
-        charityListview.setAdapter(adapter);
-        charityListview.setDivider(null);;
+        adapter = new bloodAdapter(this, listviewArray);
+        bloodListview = findViewById(R.id.charityListView);
+        bloodListview.setAdapter(adapter);
+        bloodListview.setDivider(null);;
 
         adapter.notifyDataSetChanged();
         adapter.clear();
@@ -85,7 +85,7 @@ public class charityActivity extends AppCompatActivity {
                     getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
             String myAPIKey = bundle.getString(whichKey);
-           Log.e("Get Donate URL", "API KEY : " + myAPIKey);
+            Log.e("Get Donate URL", "API KEY : " + myAPIKey);
             return myAPIKey;
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("Get Donate URL",
@@ -118,7 +118,8 @@ public class charityActivity extends AppCompatActivity {
         String pageSize = "&pageSize=20";
         String sort = "&sort=RATING%3ADESC";
         //String fundRaise = "&fundraisingOrgs=true";
-        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&city=" + zip;
+        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&state=" + zip + "&search=blood&searchType=DEFAULT";
+
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, myUrl, null,
@@ -157,7 +158,7 @@ public class charityActivity extends AppCompatActivity {
 
                                 // Get cause JSON object
                                 // try - if there is an exception, set cause to "not available"
-                                 try {
+                                try {
                                     JSONObject causeObj = test.getJSONObject("cause");
                                     String cause = causeObj.getString("causeName");
 
@@ -228,17 +229,17 @@ public class charityActivity extends AppCompatActivity {
         makeQuery(zip, new VolleyCallBack() {
             @Override
             public void onSuccess() {
-               if (!currCharity.getCause().equals("Not available")){
+                if (!currCharity.getCause().equals("Not available")){
                     // add current charity to list view
-                    listviewArray.add(new charityList(currCharity.getEIN(),
+                    listviewArray.add(new bloodList(currCharity.getEIN(),
                             currCharity.getName(), currCharity.getTagline(),
                             currCharity.getCause(),currCharity.getAddress(),
                             currCharity.getDonateURL(), currCharity.getCategory()));
 
                     Log.e("ON SUCEESS", "donation url is " + currCharity.getDonateURL());
                     Log.e("ON SUCESS", "category is " + currCharity.getCategory());
-                   adapter.notifyDataSetChanged();
-               }
+                    adapter.notifyDataSetChanged();
+                }
 
             }
         });

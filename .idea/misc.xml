@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_blood.xml" value="0.12512664640324214" />
         <entry key="app/src/main/res/layout/activity_box.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_charity.xml" value="0.12604166666666666" />
         <entry key="app/src/main/res/layout/activity_donate.xml" value="0.1" />
@@ -10,6 +11,7 @@
         <entry key="app/src/main/res/layout/activity_food_bank_map.xml" value="0.18070652173913043" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/activity_options.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/blood_layout.xml" value="0.12512664640324214" />
         <entry key="app/src/main/res/layout/box_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/charity_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/foodbank_layout.xml" value="0.1" />

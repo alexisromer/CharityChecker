@@ -3,6 +3,7 @@ package com.example.charitychecker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,10 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
         if(view.getId() == R.id.boxImageView){
             boxActivityList();
         }
+
+        if(view.getId() == R.id.bloodImageView){
+            bloodList();
+        }
     }
 
     public void listActivity(){
@@ -70,8 +75,16 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
     public void boxActivityList(){
         Intent callerIntent = getIntent();
         String zipCode = callerIntent.getStringExtra("zipCode");
-        Intent boxIntent = new Intent(this, boxActivity.class);
-        boxIntent.putExtra("zipCode", zipCode);
+        Intent boxIntent = new Intent(Intent.ACTION_VIEW);
+        boxIntent.setData(Uri.parse("https://bigsri.org/donateri/find-a-bin?near=" + zipCode));
         startActivity(boxIntent);
+    }
+
+    public void bloodList(){
+        Intent callerIntent = getIntent();
+        String zipCode = callerIntent.getStringExtra("zipCode");
+        Intent bloodIntent = new Intent(this, bloodActivity.class);
+        bloodIntent.putExtra("zipCode", zipCode);
+        startActivity(bloodIntent);
     }
 }

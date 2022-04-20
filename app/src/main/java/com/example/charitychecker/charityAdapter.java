@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,42 @@ public class charityAdapter extends ArrayAdapter<charityList> {
 
         TextView address = listItemView.findViewById(R.id.address);
         address.setText(current.getAddress());
+
+        ImageView categoryImage = listItemView.findViewById(R.id.testImageView);
+        if(current.getCategory().equals("Animals")){
+            categoryImage.setImageResource(R.drawable.animals1);
+        }
+        if(current.getCategory().equals("Arts") || current.getCategory().equals("Culture") || current.getCategory().equals("Humanities") ){
+            categoryImage.setImageResource(R.drawable.humanities1);
+        }
+        if(current.getCategory().equals("Community Development")){
+            categoryImage.setImageResource(R.drawable.community1_);
+        }
+        if(current.getCategory().equals("Education")){
+            categoryImage.setImageResource(R.drawable.education1);
+        }
+        if(current.getCategory().equals("Environment")){
+            categoryImage.setImageResource(R.drawable.environment1);
+        }
+        if(current.getCategory().equals("Health")){
+            categoryImage.setImageResource(R.drawable.health1);
+        }
+        if(current.getCategory().equals("Human Services")){
+            categoryImage.setImageResource(R.drawable.human_services1_);
+        }
+        if(current.getCategory().equals("Human and Civil Rights")){
+            categoryImage.setImageResource(R.drawable.human_and_civil_rights1);
+        }
+        if(current.getCategory().equals("International")){
+            categoryImage.setImageResource(R.drawable.international1);
+        }
+        if(current.getCategory().equals("Religion")){
+            categoryImage.setImageResource(R.drawable.religion1);
+        }
+        if(current.getCategory().equals("Research and Public Policy")){
+            categoryImage.setImageResource(R.drawable.research1);
+        }
+
 
 
 
