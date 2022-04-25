@@ -118,7 +118,7 @@ public class charityActivity extends AppCompatActivity {
         String pageSize = "&pageSize=20";
         String sort = "&sort=RATING%3ADESC";
         //String fundRaise = "&fundraisingOrgs=true";
-        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&city=" + zip;
+        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&zip=" + zip;
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, myUrl, null,

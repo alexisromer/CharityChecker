@@ -65,7 +65,7 @@ public class bloodActivity extends AppCompatActivity {
         //listviewArray.addAll(allEventsList);
 
         adapter = new bloodAdapter(this, listviewArray);
-        bloodListview = findViewById(R.id.charityListView);
+        bloodListview = findViewById(R.id.bloodListView);
         bloodListview.setAdapter(adapter);
         bloodListview.setDivider(null);;
 
@@ -118,8 +118,8 @@ public class bloodActivity extends AppCompatActivity {
         String pageSize = "&pageSize=20";
         String sort = "&sort=RATING%3ADESC";
         //String fundRaise = "&fundraisingOrgs=true";
-        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&state=" + zip + "&search=blood&searchType=DEFAULT";
-
+        //String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&state=" + zip + "&search=blood&searchType=DEFAULT";
+        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations?app_id=afeabef6&app_key=d5e89d0fa78f1da2caa6aa1afcd4c324&search=blood&searchType=DEFAULT&state=" + zip;
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, myUrl, null,
@@ -229,7 +229,7 @@ public class bloodActivity extends AppCompatActivity {
         makeQuery(zip, new VolleyCallBack() {
             @Override
             public void onSuccess() {
-                if (!currCharity.getCause().equals("Not available")){
+
                     // add current charity to list view
                     listviewArray.add(new bloodList(currCharity.getEIN(),
                             currCharity.getName(), currCharity.getTagline(),
@@ -239,7 +239,6 @@ public class bloodActivity extends AppCompatActivity {
                     Log.e("ON SUCEESS", "donation url is " + currCharity.getDonateURL());
                     Log.e("ON SUCESS", "category is " + currCharity.getCategory());
                     adapter.notifyDataSetChanged();
-                }
 
             }
         });
