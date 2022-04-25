@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 public class optionsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -47,7 +46,8 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
             FoodBankMapActivity();
         }
         if(view.getId() == R.id.boxImageView){
-            boxActivityList();
+            //boxActivityList();
+            donBoxMapActivity();
         }
 
         if(view.getId() == R.id.bloodImageView){
@@ -78,6 +78,14 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
         Intent boxIntent = new Intent(Intent.ACTION_VIEW);
         boxIntent.setData(Uri.parse("https://bigsri.org/donateri/find-a-bin?near=" + zipCode));
         startActivity(boxIntent);
+    }
+
+    public void donBoxMapActivity(){
+        Intent callerIntent = getIntent();
+        String zipCode = callerIntent.getStringExtra("zipCode");
+        //Intent donBoxMapIntent = new Intent(this, DonBinMapActivity.class);
+        //donBoxMapIntent.putExtra("zipCode", zipCode);
+        //startActivity(donBoxMapIntent);
     }
 
     public void bloodList(){

@@ -51,23 +51,24 @@ public class bloodAdapter extends ArrayAdapter<bloodList> {
         bloodList current = getItem(position);
         assert current != null;
 
-
+        Button theDonate = listItemView.findViewById(R.id.DIRECTIONS);
+        theDonate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String currentValue = current.getDonateURL();
+                Intent donateIntent = new Intent(Intent.ACTION_VIEW);
+                donateIntent.setData(Uri.parse(currentValue));
+                view.getContext().startActivity(donateIntent);
+            }
+        });
 
         //entry charity name
         TextView charityText = listItemView.findViewById(R.id.CharityName);
         charityText.setText(current.getName());
 
-        //entry tagline
-        TextView tagLine = listItemView.findViewById(R.id.tagLine);
-        tagLine.setText(current.getTagline());
-
-        //entry cause
-        TextView cause = listItemView.findViewById(R.id.cause);
-        cause.setText(current.getCause());
 
         TextView address = listItemView.findViewById(R.id.address);
         address.setText(current.getAddress());
-
 
 
 

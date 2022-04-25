@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     android:background="@color/pink_purple"
+    android:orientation="horizontal"
     android:padding="16dp">
 
     <ImageView
@@ -15,20 +15,20 @@
         app:srcCompat="@drawable/screen_shot_2022_03_09_at_4_29_02_pm" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="196dp"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/CharityName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="casual"
             android:text="Charity Name"
             android:textColor="@color/black"
             android:textSize="14dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/theDonateButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +52,7 @@
             android:textColor="@color/black"
             android:textSize="12dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/theDonateButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/CharityName"
             app:layout_constraintTop_toBottomOf="@+id/CharityName" />
 
@@ -67,16 +67,16 @@
             app:layout_constraintStart_toStartOf="@id/CharityName"
             app:layout_constraintTop_toBottomOf="@id/cause" />
 
-        <Button
-            android:id="@+id/theDonateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/navy"
-            android:text="Donate"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/theDonateButton"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:backgroundTint="@color/navy"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:text="Donate"
+        android:textSize="7dp" />
 
 </LinearLayout>

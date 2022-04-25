@@ -54,7 +54,6 @@ public class charityActivity extends AppCompatActivity {
         //String zipInfo = zipCodeEditText.getText().toString();
 
 
-
         Intent callerIntent = getIntent();
         String zipCode = callerIntent.getStringExtra("zipCode");
         Log.e("onCreate:", "the zipcode is" + zipCode);

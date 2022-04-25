@@ -39,8 +39,6 @@ public class charityAdapter extends ArrayAdapter<charityList> {
     }
 
 
-
-
     public View getView(final int position, View convertView, ViewGroup parent){
         View listItemView = convertView;
 

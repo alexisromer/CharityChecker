@@ -21,7 +21,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,35 +44,40 @@ public class bloodActivity extends AppCompatActivity {
     ListView bloodListview;
     Button theDonate;
     public bloodList currCharity = new bloodList();
+    LatLng ZipCoords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood);
 
-        //Intent callerIntent = getIntent();
-        //String zipInfo = callerIntent.getStringExtra("zipCode");
-        //EditText zipCodeEditText = findViewById(R.id.zipCode);
-        //String zipInfo = zipCodeEditText.getText().toString();
-
-
 
         Intent callerIntent = getIntent();
         String zipCode = callerIntent.getStringExtra("zipCode");
-        Log.e("onCreate:", "the zipcode is" + zipCode);
 
-        generateList(zipCode);
+
         Log.e("onCreate:", "Before generatelist");
 
-        //listviewArray.addAll(allEventsList);
 
-        adapter = new bloodAdapter(this, listviewArray);
-        bloodListview = findViewById(R.id.bloodListView);
-        bloodListview.setAdapter(adapter);
-        bloodListview.setDivider(null);;
 
-        adapter.notifyDataSetChanged();
-        adapter.clear();
+
+        getZipGeo(zipCode, new bloodActivity.VolleyCallBack(){
+            @Override
+            public void onSuccess() {
+                Log.e("GEOCODE SUCESS", "geoCode recieved:" + ZipCoords.latitude);
+                generateList(zipCode);
+                adapter = new bloodAdapter(bloodActivity.this, listviewArray);
+                bloodListview = findViewById(R.id.bloodListView);
+                bloodListview.setAdapter(adapter);
+                bloodListview.setDivider(null);
+
+                adapter.notifyDataSetChanged();
+                adapter.clear();
+
+            }
+        });
+
+
 
     }
 
@@ -85,14 +92,13 @@ public class bloodActivity extends AppCompatActivity {
                     getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
             String myAPIKey = bundle.getString(whichKey);
-            Log.e("Get Donate URL", "API KEY : " + myAPIKey);
             return myAPIKey;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("Get Donate URL",
+            Log.e("Get API Key",
                     "Failed to load meta-data, NameNotFound: " + e.getMessage());
             return "ERROR";
         } catch (NullPointerException e) {
-            Log.e("Get Donate URL",
+            Log.e("Get API Key",
                     "Failed to load meta-data, NullPointer: " + e.getMessage());
             return "ERROR";
         }
@@ -105,7 +111,51 @@ public class bloodActivity extends AppCompatActivity {
         return stringurl;
     }
 
-    public void makeQuery(String zip, final VolleyCallBack callBack){
+    public void getZipGeo(String zip, final bloodActivity.VolleyCallBack callBack){
+        String tag = "geoCode";
+        String APIKEY= getAPIKey("com.google.android.geo.API_KEY");
+
+        // create JSON request URL
+        String URL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + zip + "&key=" + APIKEY;
+
+        // create queue object
+        RequestQueue queue;
+        queue = Volley.newRequestQueue(this);
+        final double[] lat = new double[1];
+        final double[] lng = new double[1];
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null,
+                // if request is successful
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Get JSON object containing latlong coordinates
+                            JSONObject location = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+                            lat[0] = location.getDouble("lat");
+                            lng[0] = location.getDouble("lng");
+
+                            // set global variable to retrieved values
+                            ZipCoords = new LatLng(lat[0], lng[0]);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(tag, "JSONException");
+                        }
+                        callBack.onSuccess();
+                    }
+                },
+                // if there is an error with request
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("HERE: ", error.getMessage());
+                    }
+                });
+        queue.add(request);
+    }
+
+    public void bloodQuery(String zip, final VolleyCallBack callBack){
         // create queue object
         RequestQueue queue;
         queue = Volley.newRequestQueue(this);
@@ -113,92 +163,49 @@ public class bloodActivity extends AppCompatActivity {
         Log.e("makeQuery:", "in make query");
 
         // set URL based on api key
-        String auth = "?app_id=" + getAPIKey("idValue") + "&app_key=" +getAPIKey("keyValue");
+        String auth = "&key=" + getAPIKey("com.google.android.geo.API_KEY");
 
-        String pageSize = "&pageSize=20";
-        String sort = "&sort=RATING%3ADESC";
-        //String fundRaise = "&fundraisingOrgs=true";
-        //String myUrl = "https://api.data.charitynavigator.org/v2/Organizations"  + auth + sort + pageSize + "&state=" + zip + "&search=blood&searchType=DEFAULT";
-        String myUrl = "https://api.data.charitynavigator.org/v2/Organizations?app_id=afeabef6&app_key=d5e89d0fa78f1da2caa6aa1afcd4c324&search=blood&searchType=DEFAULT&state=" + zip;
+        // get the geoCoded coordinates for the zipcode provided
+        double theLat = ZipCoords.latitude;
+        double theLong = ZipCoords.longitude;
 
+        String myUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=blood+drive&location=" + theLat +"%2C" + theLong + "&radius=20000" + auth;
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, myUrl, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, myUrl, null,
                 // if request is successful
-                new Response.Listener<JSONArray>() {
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         try{
-                            for (int i = 0; i < response.length(); i++) {
-                                Log.e("makeQuery (on Response)", "request successful");
+                            JSONArray json = response.getJSONArray("results");
+                            for (int i = 0; i < json.length(); i++) {
                                 // Get current json object
-                                JSONObject test = response.getJSONObject(i);
+                                JSONObject result = json.getJSONObject(i);
+                                String name = result.getString("name");
+
+                                Log.e("Query", "Name is " + name);
 
                                 // Get the current name (json object) data
-                                String name = test.getString("charityName");
                                 currCharity.setName(name);
 
-                                // Get the current EIN (json object) data
-                                String ein = test.getString("ein");
-                                currCharity.setEIN(ein);
-
-                                // Get the current tagline (json object) data
-                                // try - if there is an exception, set tagline to "not available"
-                                try {
-                                    String tag = test.getString("tagLine");
-                                    // change "Null" to "Not available"
-                                    if (tag.equals("null")){
-                                        currCharity.setTagLine("Not available");
-                                    } else {
-                                        currCharity.setTagLine(tag);
-                                    }
-                                } catch (JSONException e){
-                                    currCharity.setTagLine("Not available");
-                                }
-
-
-                                // Get cause JSON object
-                                // try - if there is an exception, set cause to "not available"
-                                try {
-                                    JSONObject causeObj = test.getJSONObject("cause");
-                                    String cause = causeObj.getString("causeName");
-
-                                    // change "Null" to "Not available"
-                                    if (cause.equals("null")){
-                                        currCharity.setCause("Not available");
-                                    } else {
-                                        currCharity.setCause(cause);
-                                    }
-                                } catch (JSONException e){
-                                    currCharity.setCause("Not available");
-                                }
-
-                                // try - if there is an exception, set cause to "not available"
-                                try {
-                                    JSONObject catObj = test.getJSONObject("category");
-                                    String cat = catObj.getString("categoryName");
-
-                                    // change "Null" to "Not available"
-                                    if (cat.equals("null")){
-                                        currCharity.setCategory("Not available");
-                                    } else {
-                                        currCharity.setCategory(cat);
-                                    }
-                                } catch (JSONException e){
-                                    currCharity.setCategory("Not available");
-                                }
-
-
                                 // Get the current address
-                                JSONObject mailAddress = test.getJSONObject("mailingAddress");
-                                String address = mailAddress.getString("streetAddress1")
-                                        + "," + mailAddress.getString("city") + ","
-                                        + mailAddress.getString("stateOrProvince") + " "
-                                        + mailAddress.getString("postalCode");
+                                String address = result.getString("vicinity");
                                 currCharity.setAddress(address);
+                                Log.e("Query", "Address is " + address);
 
-                                // set the donate url
-                                String dUrl = getDonateURL(currCharity.getEIN());
-                                currCharity.setDonateURL(dUrl);
+                                // Get the lat and long
+                                JSONObject location = result.getJSONObject("geometry").getJSONObject("location");
+                                double lat = location.getDouble("lat");
+                                double lng = location.getDouble("lng");
+
+                                LatLng geoLoc = new LatLng(lat, lng);
+                                currCharity.setGeoLocation(geoLoc);
+                                Log.e("Query", "lat is " + lat + " long is " + lng);
+
+                                String addressURL = currCharity.getAddress().replaceAll(" ", "+");
+                                String mapsString = "https://www.google.com/maps/place/" + addressURL;
+                                currCharity.setDonateURL(mapsString);
+
 
                                 callBack.onSuccess();
 
@@ -226,20 +233,18 @@ public class bloodActivity extends AppCompatActivity {
     private void generateList(String zip){
         Log.e("generateList:", "in mgeneratelist");
         listviewArray = new ArrayList<>();
-        makeQuery(zip, new VolleyCallBack() {
+        bloodQuery(zip, new VolleyCallBack() {
             @Override
             public void onSuccess() {
-
                     // add current charity to list view
-                    listviewArray.add(new bloodList(currCharity.getEIN(),
-                            currCharity.getName(), currCharity.getTagline(),
-                            currCharity.getCause(),currCharity.getAddress(),
-                            currCharity.getDonateURL(), currCharity.getCategory()));
+                    listviewArray.add(new bloodList("NA",
+                            currCharity.getName(), "NA",
+                            "NA",currCharity.getAddress(),
+                            currCharity.getDonateURL(), "NA"));
 
-                    Log.e("ON SUCEESS", "donation url is " + currCharity.getDonateURL());
-                    Log.e("ON SUCESS", "category is " + currCharity.getCategory());
+                    //Log.e("ON SUCEESS", "donation url is " + currCharity.getDonateURL());
+                    //Log.e("ON SUCESS", "category is " + currCharity.getCategory());
                     adapter.notifyDataSetChanged();
-
             }
         });
 
