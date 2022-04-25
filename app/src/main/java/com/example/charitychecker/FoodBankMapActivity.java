@@ -119,7 +119,7 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
         double theLat = ZipCoords.latitude;
         double theLong = ZipCoords.longitude;
         Log.e("makeQuery", "theLat is " + theLat + " the long is " + theLong);
-        String myUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=food+pantry&location=" + theLat +"%2C" + theLong + "&radius=10000&key=AIzaSyBdXQpUF04lN8gbC51xFyRHwDAoAt_YHW0";
+        String myUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=food+pantry&location=" + theLat +"%2C" + theLong + "&radius=10000" + auth;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, myUrl, null,
                 // if request is successful
