@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -19,7 +20,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Button zipActivity = findViewById(R.id.zipButton);
-        zipActivity.setOnClickListener((View.OnClickListener) this);
+        zipActivity.setOnClickListener(this);
+
+        ImageView aboutImage = findViewById(R.id.aboutImageView);
+        aboutImage.setOnClickListener(this);
     }
 
 
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.zipButton) {
             optionsActivity();
+        }
+        if (view.getId() == R.id.aboutImageView){
+            aboutActivity();
         }
 
     }
@@ -37,5 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent activityIntent = new Intent(this, optionsActivity.class);
         activityIntent.putExtra("zipCode", zipInfo);
         startActivity(activityIntent);
+    }
+
+    public void aboutActivity(){
+        Intent aboutIntent = new Intent(this, aboutActivity.class);
+        startActivity(aboutIntent);
     }
 }
