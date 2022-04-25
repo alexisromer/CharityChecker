@@ -2,4 +2,5 @@
     <string name="app_name">CharityChecker</string>
     <string name="title_activity_food_bank_map">FoodBankMapActivity</string>
     <string name="charity_description">Charity Checker is a mobile Android application that provides the user with relevant local charities/nonprofits with opportunities to donate. This app creates a user friendly environment that makes it easier to learn about local charities, locate donation bins, food banks, and blood donations. We use Google Places SDK and charitynavigator.com to get the information. This app was created by Alexis Romer and Hannah Lord. </string>
+    <string name="title_activity_don_bin_map">DonBinMapActivity</string>
 </resources>

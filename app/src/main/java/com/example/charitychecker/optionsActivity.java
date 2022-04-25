@@ -83,9 +83,9 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
     public void donBoxMapActivity(){
         Intent callerIntent = getIntent();
         String zipCode = callerIntent.getStringExtra("zipCode");
-        //Intent donBoxMapIntent = new Intent(this, DonBinMapActivity.class);
-        //donBoxMapIntent.putExtra("zipCode", zipCode);
-        //startActivity(donBoxMapIntent);
+        Intent donBoxMapIntent = new Intent(this, DonBinMapActivity.class);
+        donBoxMapIntent.putExtra("zipCode", zipCode);
+        startActivity(donBoxMapIntent);
     }
 
     public void bloodList(){

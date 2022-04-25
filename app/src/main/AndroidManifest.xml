@@ -11,14 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CharityChecker">
-        <activity
-            android:name=".aboutActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${API_MAPS}" />
 
+
+        <activity
+            android:name=".DonBinMapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_don_bin_map" />
+        <activity
+            android:name=".aboutActivity"
+            android:exported="false" />
         <activity
             android:name=".FoodBankMapActivity"
             android:exported="false"
