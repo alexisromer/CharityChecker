@@ -25,7 +25,7 @@
         android:layout_height="49dp"
         android:text="✓"
         android:textSize="20sp"
-        app:backgroundTint="@color/navy"
+        app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/zipCode"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.856"

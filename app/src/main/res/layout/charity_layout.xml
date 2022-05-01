@@ -72,8 +72,8 @@
     <Button
         android:id="@+id/theDonateButton"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:backgroundTint="@color/navy"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/black"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:text="Donate"

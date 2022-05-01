@@ -2,6 +2,7 @@ package com.example.charitychecker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,9 +43,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void optionsActivity(){
         EditText zipCodeEditText = findViewById(R.id.zipCode);
         String zipInfo = zipCodeEditText.getText().toString();
-        Intent activityIntent = new Intent(this, optionsActivity.class);
-        activityIntent.putExtra("zipCode", zipInfo);
-        startActivity(activityIntent);
+
+        if(zipInfo.equals("")){
+            Context context = getApplicationContext();
+            CharSequence text = "Please enter a zipcode";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        else {
+            Intent activityIntent = new Intent(this, optionsActivity.class);
+            activityIntent.putExtra("zipCode", zipInfo);
+            startActivity(activityIntent);
+        }
     }
 
     public void aboutActivity(){
