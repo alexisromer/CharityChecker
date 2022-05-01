@@ -229,14 +229,18 @@ public class FoodBankMapActivity extends FragmentActivity implements OnMapReadyC
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(ZipCoords));
                 for (int i = 0; i < mapMarker.size(); i++){
                     charityList thisCharity = mapMarker.elementAt(i);
-                    mMap.addMarker(new MarkerOptions()
+                    Marker currMarker = mMap.addMarker(new MarkerOptions()
                             .position(thisCharity.getGeoLocation())
                             .title(thisCharity.getName())
                             .snippet(thisCharity.getAddress())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.mark))
-
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.mark)
+                            )
                     );
+                    currMarker.setTag(thisCharity);
                 }
+                infoWindowAdapter markerInfoWindowAdapter = new infoWindowAdapter(getApplicationContext());
+                googleMap.setInfoWindowAdapter(markerInfoWindowAdapter);
+
             }
         });
 

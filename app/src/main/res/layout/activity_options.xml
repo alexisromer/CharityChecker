@@ -11,13 +11,9 @@
         android:id="@+id/donateImageView"
         android:layout_width="174dp"
         android:layout_height="179dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/boxImageView"
-        app:layout_constraintEnd_toStartOf="@+id/boxImageView"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/looking_textView"
-        app:layout_constraintVertical_bias="0.063"
         app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_06_58_pm" />
 
     <ImageView
@@ -25,13 +21,13 @@
         android:layout_width="174dp"
         android:layout_height="179dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/boxImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintHorizontal_bias="0.735"
         app:layout_constraintStart_toEndOf="@+id/donateImageView"
         app:layout_constraintTop_toBottomOf="@+id/looking_textView"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_13_13_pm" />
 
     <ImageView
@@ -52,24 +48,25 @@
         android:id="@+id/boxImageView"
         android:layout_width="174dp"
         android:layout_height="179dp"
-        android:layout_marginTop="368dp"
+        android:layout_marginBottom="132dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/looking_textView"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/donateImageView"
+        app:layout_constraintVertical_bias="0.73"
         app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_13_20_pm" />
 
     <TextView
         android:id="@+id/looking_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
         android:layout_weight="1"
+        android:fontFamily="casual"
         android:padding="10dp"
         android:text="What are you looking for?"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Vector;
+
 
 public class DonBinMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -229,14 +231,20 @@ public class DonBinMapActivity extends FragmentActivity implements OnMapReadyCal
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(ZipCoords));
                 for (int i = 0; i < mapMarker.size(); i++){
                     charityList thisCharity = mapMarker.elementAt(i);
-                    mMap.addMarker(new MarkerOptions()
+                    Marker currMarker = mMap.addMarker(new MarkerOptions()
                             .position(thisCharity.getGeoLocation())
                             .title(thisCharity.getName())
                             .snippet(thisCharity.getAddress())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.mark))
-
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.mark)
+                            )
                     );
+                    currMarker.setTag(thisCharity);
                 }
+
+
+                infoWindowAdapter markerInfoWindowAdapter = new infoWindowAdapter(getApplicationContext());
+                googleMap.setInfoWindowAdapter(markerInfoWindowAdapter);
+
             }
         });
 
