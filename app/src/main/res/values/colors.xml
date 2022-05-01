@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pink_purple">#EEEEFD</color>
     <color name="navy">#000080</color>
+    <color name="app_pink">#E9D8FA</color>
+    <color name="app_purple">#D8D8FA</color>
 </resources>

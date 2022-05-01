@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -20,6 +21,8 @@ public class optionsActivity extends AppCompatActivity implements View.OnClickLi
 
        // Button foodBankButton = findViewById(R.id.foodbanks_button);
        // foodBankButton.setOnClickListener((View.OnClickListener) this);
+
+        getSupportActionBar().setTitle(Html.fromHtml("<font color =\"black\">" + getString(R.string.app_name) + "</font>"));
 
         ImageView donatePicture = findViewById(R.id.donateImageView);
         donatePicture.setOnClickListener(this);
