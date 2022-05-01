@@ -14,7 +14,8 @@
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/looking_textView"
-        app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_06_58_pm" />
+        app:layout_constraintVertical_bias="0.063"
+        app:srcCompat="@drawable/donate_logo" />
 
     <ImageView
         android:id="@+id/foodImageView"
@@ -27,8 +28,8 @@
         app:layout_constraintHorizontal_bias="0.735"
         app:layout_constraintStart_toEndOf="@+id/donateImageView"
         app:layout_constraintTop_toBottomOf="@+id/looking_textView"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_13_13_pm" />
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/foodbanks_logo" />
 
     <ImageView
         android:id="@+id/bloodImageView"
@@ -41,7 +42,7 @@
         app:layout_constraintStart_toEndOf="@+id/boxImageView"
         app:layout_constraintTop_toBottomOf="@+id/foodImageView"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/blood"
+        app:srcCompat="@drawable/blood_logo"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageView
@@ -51,9 +52,9 @@
         android:layout_marginBottom="132dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donateImageView"
-        app:layout_constraintVertical_bias="0.73"
-        app:srcCompat="@drawable/screen_shot_2022_04_12_at_3_13_20_pm" />
+        app:layout_constraintTop_toBottomOf="@+id/looking_textView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/boxes_logo" />
 
     <TextView
         android:id="@+id/looking_textView"
