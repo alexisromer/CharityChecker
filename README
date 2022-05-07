@@ -1,0 +1,26 @@
+ABOUT:
+Charity Checker is a mobile Android application that provides the user with relevant local charities, foodbanks, blood drives and donation bins via a simple user interface. It minimizes the number of clicks required to access this information, and presents the user with a list or map view based on the selected feature. Monetary donations are accessible from the donation page so users can quickly donate to the charity of their choosing based on a cause they are passionate about. Directions to the locations are available on the  donation bins, food banks, and blood drive pages to give the user the option to immediately visit any of these places. 
+
+Written in Java using Android Studios as our IDE, we developed this application with the purpose of making donating to a cause they support easier and more accessible for our users. Over the course of the past three months, we designed a user interface, implemented backend API fetches, and made executive decisions on front-end presentation. The resulting application is currently functional for all zip-codes in the United States, and is powered by the Charity Navigator and Google Places APIs. 
+
+
+This application was developed by Hannah Lord and Alexis Romer in Spring 2022. 
+
+RUNNING
+This application is built for running in Android Studio Bumblebee | 2021.1.1
+
+This application requires an API key from Google Places SDK, Google Maps API and Charity Navigator. All three are free and can be accessed through these links:
+Charity Navigator Content Tier plan (free) : https://www.charitynavigator.org/index.cfm?bay=content.view&cpid=1397 
+Google Maps Platform: https://mapsplatform.google.com/ 
+	Activate the following: 
+Maps SDK For Android
+Places API
+GeoCoding API
+To compile this application, simply download the source code from GitHub and run it on Android Studio on your local device. 
+
+CREDITS
+We would like to acknowledge Charity Navigator and their API documentation for providing invaluable information for our application. We would also like to thank Google’s API platform for making it easy and accessible to use and implement. 
+
+Lastly, we would like to thank Professor Tong and the Computer Science department at Wheaton College for all their advice and support in this process.
+
+
