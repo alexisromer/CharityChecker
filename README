@@ -10,12 +10,11 @@ RUNNING
 This application is built for running in Android Studio Bumblebee | 2021.1.1
 
 This application requires an API key from Google Places SDK, Google Maps API and Charity Navigator. All three are free and can be accessed through these links:
-Charity Navigator Content Tier plan (free) : https://www.charitynavigator.org/index.cfm?bay=content.view&cpid=1397 
-Google Maps Platform: https://mapsplatform.google.com/ 
-	Activate the following: 
-Maps SDK For Android
-Places API
-GeoCoding API
+	- Charity Navigator Content Tier plan (free) : https://www.charitynavigator.org/index.cfm?bay=content.view&cpid=1397 
+	- Google Maps Platform: https://mapsplatform.google.com/ . Activate the following: 
+		+ Maps SDK For Android
+		+ Places API
+		+ GeoCoding API
 To compile this application, simply download the source code from GitHub and run it on Android Studio on your local device. 
 
 CREDITS
